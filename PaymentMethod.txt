@@ -1,0 +1,121 @@
+package com.nit.senario_based_que;
+
+public class Payment 
+{
+	public void makePayment(double amount) 
+	{
+        if (validateAmount(amount)) 
+        {
+            System.out.println("Processing payment via Cash...");
+            System.out.println("Amount Paid RS :" + amount);
+            System.out.println("Payment Successful!");
+        }
+    }
+	private boolean validateAmount(double amount) 
+	{
+        if (amount <= 0) 
+        {
+            System.out.println("Error: Amount must be greater than zero.");
+            return false;
+        }
+        return true;
+    }
+	public void makePayment(String cardHolderName, String creditCardNumber, double amount) 
+	{
+	        if (validateAmount(amount) && validateCardNumber(creditCardNumber)) 
+	        {
+	            System.out.println("Processing payment via Credit Card...");
+	            System.out.println("Card Holder: " + cardHolderName);
+	            System.out.println("Card Number: " + maskCardNumber(creditCardNumber));
+	            System.out.println("Amount Paid RS :" + amount);
+	            System.out.println("Payment Successful!");
+	        }
+	    }
+	 private boolean validateCardNumber(String creditCardNumber) 
+	 {
+	        if (creditCardNumber.length() == 16)
+	        {
+	            return true;
+	        } 
+	        else 
+	        {
+	        	System.out.println("Error: Amount must be greater than zero.");
+	            System.out.println("Error: Inalid card number. It must be 16 digits.");
+	            return false;
+	        }
+	    }
+		
+	 public void makePayment(String debitCardNumber, double amount) 
+	 {
+	        if (validateAmount(amount) && validateCardNumber(debitCardNumber))
+	        {
+	            System.out.println("Processing payment via Debit Card...");
+	            System.out.println("Card Number: " + maskCardNumber(debitCardNumber));
+	            System.out.println("Amount Paid RS :" + amount);
+	            System.out.println("Payment Successful!");
+	        }
+	  }
+	 private String maskCardNumber(String cardNumber) 
+	 	{
+	        return "****-****-****-" + cardNumber.substring(cardNumber.length() - 4);
+	    }
+
+}
+
+
+package com.nit.senario_based_que;
+import java.util.*;
+public class PaymentProcess {
+
+	//private static Object scanner;
+
+	public static void main(String[] args) 
+	{
+		System.out.println("Payment Menu");
+		System.out.println("\t\t 1) Payment by using Cash ");
+		System.out.println("\t\t 2) Payment by using Credit Card ");
+		System.out.println("\t\t 3) Payment by using Debit Card ");
+		Payment payment=new Payment();
+		Scanner scanner=new Scanner(System.in);
+		 System.out.print("Please enter your Payment choice [1/2/3]: ");
+	       
+	       
+			int choice = scanner.nextInt();
+
+	        switch (choice)
+	        {
+	            case 1:
+	                System.out.print("Enter the amount you want to pay through cash: ");
+	                double cashAmount = scanner.nextDouble();
+	                payment.makePayment(cashAmount);
+	                break;
+
+	            case 2:
+	                System.out.print("Enter your name: ");
+	                scanner.nextLine(); // Consume newline
+	                String cardHolderName = scanner.nextLine();
+	                System.out.print("Enter your 16 digit Credit Card Number: ");
+	                String creditCardNumber = scanner.nextLine();
+	                System.out.print("Enter your Payment Amount: ");
+	                double creditAmount = scanner.nextDouble();
+	                payment.makePayment(cardHolderName, creditCardNumber, creditAmount);
+	                break;
+
+	            case 3:
+	                System.out.print("Enter your 16 digit Debit Card Number: ");
+	                scanner.nextLine(); // Consume newline
+	                String debitCardNumber = scanner.nextLine();
+	                System.out.print("Enter your Payment Amount: ");
+	                double debitAmount = scanner.nextDouble();
+	                payment.makePayment(debitCardNumber, debitAmount);
+	                break;
+
+	            default:
+	                System.out.println("Invalid choice. Please select 1, 2, or 3.");
+	        }
+
+	        scanner.close();
+	    }
+	}
+
+
